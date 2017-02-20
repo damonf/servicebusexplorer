@@ -1,0 +1,36 @@
+.app-component {
+  height: 100%;
+}
+
+.top {
+  height: 50px;
+}
+
+.bottom {
+  height: ~"calc(100% - 50px)";
+
+  .service-bus-desc {
+    height: 70%;
+
+    .list-view {
+      float: left;
+      width: 30%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .detail-view {
+      border: 1px dashed lightgray;
+      float: left;
+      width: 70%;
+      height: 100%;
+    }
+  }
+
+
+  .console {
+    height: 30%;
+    border: 1px dashed lightgray;
+  }
+}

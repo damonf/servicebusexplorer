@@ -1,0 +1,27 @@
+<div *ngFor="let topic of topics">
+
+  <div class="list-group-item">
+    <a href="javascript:void(0)" (click)="topic.open = !topic.open">
+      <i *ngIf="!topic.open" class="fa fa-chevron-right" aria-hidden="true"></i>
+      <i *ngIf="topic.open" class="fa fa-chevron-down" aria-hidden="true"></i>
+    </a><span class="ml-2"> {{ topic.name }} ({{topic.activeMessageCount}}, {{topic.deadLetterMessageCount}})</span>
+  </div>
+
+  <div class="sub-menu" [ngbCollapse]="!topic.open">
+
+    <div class="menu-header list-group-item">
+      <a href="javascript:void(0)" (click)="topic.subscriptionsOpen = !topic.subscriptionsOpen">
+        <i *ngIf="!topic.subscriptionsOpen" class="fa fa-chevron-right" aria-hidden="true"></i>
+        <i *ngIf="topic.subscriptionsOpen" class="fa fa-chevron-down" aria-hidden="true"></i>
+      </a><span class="ml-2"> Subscriptions</span>
+    </div>
+
+    <div [ngbCollapse]="!topic.subscriptionsOpen">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let subscription of topic.subscriptions">{{ subscription.name }} ({{subscription.activeMessageCount}}, {{subscription.deadLetterMessageCount}})</li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,21 @@
+<div class="menu-header list-group-item">
+  <a href="javascript:void(0)" (click)="serviceBusDescription.queuesOpen = !serviceBusDescription.queuesOpen">
+    <i *ngIf="!serviceBusDescription.queuesOpen" class="fa fa-chevron-right" aria-hidden="true"></i>
+    <i *ngIf="serviceBusDescription.queuesOpen" class="fa fa-chevron-down" aria-hidden="true"></i>
+  </a><span class="ml-2"> Queues</span>
+</div>
+
+<div class="sub-menu" [ngbCollapse]="!serviceBusDescription.queuesOpen">
+  <app-queue-list [queues]="serviceBusDescription.queues"></app-queue-list>
+</div>
+
+<div class="menu-header list-group-item">
+  <a href="javascript:void(0)" (click)="serviceBusDescription.topicsOpen = !serviceBusDescription.topicsOpen">
+    <i *ngIf="!serviceBusDescription.topicsOpen" class="fa fa-chevron-right" aria-hidden="true"></i>
+    <i *ngIf="serviceBusDescription.topicsOpen" class="fa fa-chevron-down" aria-hidden="true"></i>
+  </a><span class="ml-2"> Topics</span>
+</div>
+
+<div class="sub-menu" [ngbCollapse]="!serviceBusDescription.topicsOpen">
+  <app-topic-list [topics]="serviceBusDescription.topics"></app-topic-list>
+</div>
