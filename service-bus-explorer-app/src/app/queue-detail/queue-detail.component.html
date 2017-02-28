@@ -1,0 +1,288 @@
+
+<div class="container-fluid">
+  <div class="clearfix my-2">
+    <div class="pull-left font-weight-bold">{{ path }}</div>
+    <button class="pull-right btn btn-secondary btn-sm">Refresh</button>
+  </div>
+
+  <ngb-tabset>
+    <ngb-tab title="Essentials">
+      <template ngbTabContent>
+        <div class="row mt-4">
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                Queue Info
+              </div>
+              <div class="card-block">
+                <div class="row">
+                  <div class="col-6">
+                    Status
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.status }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    Is Read Only
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.isReadOnly ? 'true' : 'false' }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    Size (Bytes)
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.sizeInBytes }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    Max Size (MB)
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.maxSizeInMegabytes }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    Created At
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.createdAt | date: 'short' }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    Accessed At
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.accessedAt | date: 'short' }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    Updated At
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.updatedAt | date: 'short' }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                Messages
+              </div>
+              <div class="card-block">
+                <div class="row">
+                  <div class="col-6">
+                    Message Count
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.messageCount }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    Active Messages
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.activeMessageCount }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    DeadLetter Messages
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.deadLetterMessageCount }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    Scheduled Messages
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.scheduledMessageCount }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    Transfer Messages
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.transferMessageCount }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    Transfer DL Messages
+                  </div>
+                  <div class="col-6">
+                    {{ queueDetail.transferDeadLetterMessageCount }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </template>
+    </ngb-tab>
+
+    <ngb-tab title="Properties">
+      <template ngbTabContent>
+        <div class="row mt-4">
+          <div class="col entity-properties">
+            <div class="row">
+              <div class="col-6">
+                Enable Partitioning
+              </div>
+              <div class="col-6">
+                {{ queueDetail.enablePartitioning }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Enable DeadLettering On Message Expiration
+              </div>
+              <div class="col-6">
+                {{ queueDetail.enableDeadLetteringOnMessageExpiration }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Requires Duplicate Detection
+              </div>
+              <div class="col-6">
+                {{ queueDetail.requiresDuplicateDetection }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Requires Session
+              </div>
+              <div class="col-6">
+                {{ queueDetail.requiresSession }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Enable Batched Operations
+              </div>
+              <div class="col-6">
+                {{ queueDetail.enableBatchedOperations }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Is Anonymous Accessible
+              </div>
+              <div class="col-6">
+                {{ queueDetail.isAnonymousAccessible }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Support Ordering
+              </div>
+              <div class="col-6">
+                {{ queueDetail.supportOrdering }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Enable Express
+              </div>
+              <div class="col-6">
+                {{ queueDetail.enableExpress }}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                Max Delivery Count
+              </div>
+              <div class="col-6">
+                {{ queueDetail.maxDeliveryCount }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                User Metadata
+              </div>
+              <div class="col-6">
+                {{ queueDetail.userMetadata }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Forward To
+              </div>
+              <div class="col-6">
+                {{ queueDetail.forwardTo }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Forward Dead Lettered Messages To
+              </div>
+              <div class="col-6">
+                {{ queueDetail.forwardDeadLetteredMessagesTo }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Availability Status
+              </div>
+              <div class="col-6">
+                {{ queueDetail.availabilityStatus }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Lock Duration
+              </div>
+              <div class="col-6">
+                {{ queueDetail.lockDuration }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Default Message Time To Live
+              </div>
+              <div class="col-6">
+                {{ queueDetail.defaultMessageTimeToLive }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Auto Delete On Idle
+              </div>
+              <div class="col-6">
+                {{ queueDetail.autoDeleteOnIdle }}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Duplicate Detection History Time Window
+              </div>
+              <div class="col-6">
+                {{ queueDetail.duplicateDetectionHistoryTimeWindow }}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </template>
+    </ngb-tab>
+
+  </ngb-tabset>
+</div>

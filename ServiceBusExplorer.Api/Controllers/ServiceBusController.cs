@@ -20,5 +20,12 @@ namespace ServiceBusExplorer.Api.Controllers
             var serviceBusDescription = await _mediator.Send(new GetServiceBus());
             return Ok(serviceBusDescription);
         }
+
+        [Route("Name")]
+        public async Task<IHttpActionResult> GetAddress()
+        {
+            var address = await _mediator.Send(new GetServiceBusAddress());
+            return Ok(address.Host);
+        }
     }
 }

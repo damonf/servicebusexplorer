@@ -174,6 +174,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\GetQueue.cs" />
+    <Compile Include="Controllers\GetServiceBusAddress.cs" />
+    <Compile Include="Controllers\QueueController.cs" />
+    <Compile Include="Controllers\QueueQueryHandler.cs" />
+    <Compile Include="Controllers\ServiceBusAddressQueryHandler.cs" />
     <Compile Include="Controllers\ServiceBusController.cs" />
     <Compile Include="Controllers\GetServiceBus.cs" />
     <Compile Include="Controllers\ServiceBusQueryHandler.cs" />
@@ -190,6 +195,8 @@
     <Compile Include="Infrastructure\Logging.cs" />
     <Compile Include="Infrastructure\ServiceBusExplorerHub.cs" />
     <Compile Include="Infrastructure\SignalRContractResolver.cs" />
+    <Compile Include="Infrastructure\TimeSpanExtensions.cs" />
+    <Compile Include="Model\QueueDetailModel.cs" />
     <Compile Include="Model\QueueModel.cs" />
     <Compile Include="Model\ServiceBusModel.cs" />
     <Compile Include="Model\SubscriptionModel.cs" />
@@ -199,7 +206,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

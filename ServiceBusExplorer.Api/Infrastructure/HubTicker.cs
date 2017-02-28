@@ -65,8 +65,15 @@ namespace ServiceBusExplorer.Api.Infrastructure
 
                 while (!_stopSignal.WaitOne(Interval))
                 {
-                    var update = mediator.Send(new GetServiceBus()).Result;
-                    hub.Clients.All.ServiceBusUpdate(update);
+                    try
+                    {
+                        var update = mediator.Send(new GetServiceBus()).Result;
+                        hub.Clients.All.ServiceBusUpdate(update);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Error("Exception during servicebus update: {message}", e.Message);
+                    }
                 }
 
                 logger.Information($"{nameof(HubTicker)} stopped");

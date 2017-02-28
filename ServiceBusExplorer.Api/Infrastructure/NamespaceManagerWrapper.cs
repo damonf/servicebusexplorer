@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
@@ -10,6 +11,8 @@ namespace ServiceBusExplorer.Api.Infrastructure
         Task<IEnumerable<QueueDescription>> GetQueuesAsync();
         Task<IEnumerable<TopicDescription>> GetTopicsAsync();
         Task<IEnumerable<SubscriptionDescription>> GetSubscriptionsAsync(string topicPath);
+        Task<QueueDescription> GetQueueAsync(string path);
+        Uri Address { get; }
     }
 
     public class NamespaceManagerWrapper : INamespaceManagerWrapper
@@ -35,5 +38,12 @@ namespace ServiceBusExplorer.Api.Infrastructure
         {
             return await _namespaceManager.GetSubscriptionsAsync(topicPath);
         }
+
+        public async Task<QueueDescription> GetQueueAsync(string path)
+        {
+            return await _namespaceManager.GetQueueAsync(path);
+        }
+
+        public Uri Address => _namespaceManager.Address;
     }
 }

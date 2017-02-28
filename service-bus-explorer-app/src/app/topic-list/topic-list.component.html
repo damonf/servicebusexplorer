@@ -4,7 +4,7 @@
     <a href="javascript:void(0)" (click)="topic.open = !topic.open">
       <i *ngIf="!topic.open" class="fa fa-chevron-right" aria-hidden="true"></i>
       <i *ngIf="topic.open" class="fa fa-chevron-down" aria-hidden="true"></i>
-    </a><span class="ml-2"> {{ topic.name }} ({{topic.activeMessageCount}}, {{topic.deadLetterMessageCount}})</span>
+    </a><span class="ml-2"><a [routerLink]="['/topic-detail', topic.name]">{{ topic.name }}</a> ({{topic.activeMessageCount}}, {{topic.deadLetterMessageCount}})</span>
   </div>
 
   <div class="sub-menu" [ngbCollapse]="!topic.open">
@@ -18,7 +18,7 @@
 
     <div [ngbCollapse]="!topic.subscriptionsOpen">
       <ul class="list-group">
-        <li class="list-group-item" *ngFor="let subscription of topic.subscriptions">{{ subscription.name }} ({{subscription.activeMessageCount}}, {{subscription.deadLetterMessageCount}})</li>
+        <li class="list-group-item" *ngFor="let subscription of topic.subscriptions"><a [routerLink]="['/subscription-detail', topic.name, subscription.name]">{{ subscription.name }}</a> ({{subscription.activeMessageCount}}, {{subscription.deadLetterMessageCount}})</li>
       </ul>
     </div>
 
