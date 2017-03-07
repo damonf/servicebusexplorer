@@ -22,12 +22,15 @@ export class QueueDetailComponent implements OnInit {
     this.route.params
       .subscribe((params: Params) => {
         this.path = params['path'];
-
-        this.serviceBusQueryService.getQueue(this.path)
-          .then(queueDetail => {
-            this.queueDetail = queueDetail;
-          })
+        this.refresh();
       });
+  }
+
+  refresh(): void {
+    this.serviceBusQueryService.getQueue(this.path)
+      .then(queueDetail => {
+        this.queueDetail = queueDetail;
+      })
   }
 
 }

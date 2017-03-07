@@ -1,8 +1,6 @@
-export class QueueDetail {
+export class SubscriptionDetail {
   status: string;
   isReadonly: boolean;
-  sizeInBytes: number;
-  maxSizeInMegabytes: number;
   createdAt: Date;
   accessedAt: Date;
   updatedAt: Date;
@@ -14,12 +12,9 @@ export class QueueDetail {
   transferDeadLetterMessageCount: number;
   enablePartitioning : boolean;
   enableDeadLetteringOnMessageExpiration: boolean;
-  requiresDuplicateDetection: boolean;
+  enableDeadLetteringOnFilterEvaluationExceptions: boolean;
   requiresSession: boolean;
   enableBatchedOperations: boolean;
-  isAnonymousAccessible: boolean;
-  supportOrdering: boolean;
-  enableExpress: boolean;
   maxDeliveryCount: number;
   userMetadata: string;
   forwardTo: string;
@@ -28,5 +23,4 @@ export class QueueDetail {
   lockDuration: string;
   defaultMessageTimeToLive: string;
   autoDeleteOnIdle: string;
-  duplicateDetectionHistoryTimeWindow: string;
 }

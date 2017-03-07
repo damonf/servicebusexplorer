@@ -54,7 +54,6 @@ namespace ServiceBusExplorer.Api.Controllers
                 ForwardTo = queueDescription.ForwardTo,
                 ForwardDeadLetteredMessagesTo = queueDescription.ForwardDeadLetteredMessagesTo,
                 AvailabilityStatus = Enum.GetName(queueDescription.AvailabilityStatus.GetType(), queueDescription.AvailabilityStatus),
-
                 LockDuration = queueDescription.LockDuration.ToReadableString(),
                 DefaultMessageTimeToLive = queueDescription.DefaultMessageTimeToLive.ToReadableString(),
                 AutoDeleteOnIdle = queueDescription.AutoDeleteOnIdle.ToReadableString(),

@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <div class="clearfix my-2">
     <div class="pull-left font-weight-bold">{{ path }}</div>
-    <button class="pull-right btn btn-secondary btn-sm">Refresh</button>
+    <button (click)="refresh()" class="pull-right btn btn-secondary btn-sm">Refresh</button>
   </div>
 
   <ngb-tabset>
@@ -139,147 +139,149 @@
 
     <ngb-tab title="Properties">
       <template ngbTabContent>
-        <div class="row mt-4">
-          <div class="col entity-properties">
-            <div class="row">
-              <div class="col-6">
-                Enable Partitioning
+        <div class="container-fluid">
+          <div class="row mt-4">
+            <div class="col entity-properties">
+              <div class="row">
+                <div class="col-6">
+                  Enable Partitioning
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.enablePartitioning }}
+                </div>
               </div>
-              <div class="col-6">
-                {{ queueDetail.enablePartitioning }}
+              <div class="row">
+                <div class="col-6">
+                  Enable DeadLettering On Message Expiration
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.enableDeadLetteringOnMessageExpiration }}
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Enable DeadLettering On Message Expiration
+              <div class="row">
+                <div class="col-6">
+                  Requires Duplicate Detection
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.requiresDuplicateDetection }}
+                </div>
               </div>
-              <div class="col-6">
-                {{ queueDetail.enableDeadLetteringOnMessageExpiration }}
+              <div class="row">
+                <div class="col-6">
+                  Requires Session
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.requiresSession }}
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Requires Duplicate Detection
+              <div class="row">
+                <div class="col-6">
+                  Enable Batched Operations
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.enableBatchedOperations }}
+                </div>
               </div>
-              <div class="col-6">
-                {{ queueDetail.requiresDuplicateDetection }}
+              <div class="row">
+                <div class="col-6">
+                  Is Anonymous Accessible
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.isAnonymousAccessible }}
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Requires Session
+              <div class="row">
+                <div class="col-6">
+                  Support Ordering
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.supportOrdering }}
+                </div>
               </div>
-              <div class="col-6">
-                {{ queueDetail.requiresSession }}
+              <div class="row">
+                <div class="col-6">
+                  Enable Express
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.enableExpress }}
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Enable Batched Operations
+
+              <div class="row">
+                <div class="col-6">
+                  Max Delivery Count
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.maxDeliveryCount }}
+                </div>
               </div>
-              <div class="col-6">
-                {{ queueDetail.enableBatchedOperations }}
+              <div class="row">
+                <div class="col-6">
+                  User Metadata
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.userMetadata }}
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Is Anonymous Accessible
+              <div class="row">
+                <div class="col-6">
+                  Forward To
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.forwardTo }}
+                </div>
               </div>
-              <div class="col-6">
-                {{ queueDetail.isAnonymousAccessible }}
+              <div class="row">
+                <div class="col-6">
+                  Forward Dead Lettered Messages To
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.forwardDeadLetteredMessagesTo }}
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Support Ordering
+              <div class="row">
+                <div class="col-6">
+                  Availability Status
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.availabilityStatus }}
+                </div>
               </div>
-              <div class="col-6">
-                {{ queueDetail.supportOrdering }}
+              <div class="row">
+                <div class="col-6">
+                  Lock Duration
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.lockDuration }}
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Enable Express
+              <div class="row">
+                <div class="col-6">
+                  Default Message Time To Live
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.defaultMessageTimeToLive }}
+                </div>
               </div>
-              <div class="col-6">
-                {{ queueDetail.enableExpress }}
+              <div class="row">
+                <div class="col-6">
+                  Auto Delete On Idle
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.autoDeleteOnIdle }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  Duplicate Detection History Time Window
+                </div>
+                <div class="col-6">
+                  {{ queueDetail.duplicateDetectionHistoryTimeWindow }}
+                </div>
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-6">
-                Max Delivery Count
-              </div>
-              <div class="col-6">
-                {{ queueDetail.maxDeliveryCount }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                User Metadata
-              </div>
-              <div class="col-6">
-                {{ queueDetail.userMetadata }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Forward To
-              </div>
-              <div class="col-6">
-                {{ queueDetail.forwardTo }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Forward Dead Lettered Messages To
-              </div>
-              <div class="col-6">
-                {{ queueDetail.forwardDeadLetteredMessagesTo }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Availability Status
-              </div>
-              <div class="col-6">
-                {{ queueDetail.availabilityStatus }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Lock Duration
-              </div>
-              <div class="col-6">
-                {{ queueDetail.lockDuration }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Default Message Time To Live
-              </div>
-              <div class="col-6">
-                {{ queueDetail.defaultMessageTimeToLive }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Auto Delete On Idle
-              </div>
-              <div class="col-6">
-                {{ queueDetail.autoDeleteOnIdle }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-6">
-                Duplicate Detection History Time Window
-              </div>
-              <div class="col-6">
-                {{ queueDetail.duplicateDetectionHistoryTimeWindow }}
-              </div>
-            </div>
           </div>
-
         </div>
       </template>
     </ngb-tab>

@@ -1,4 +1,4 @@
-export class QueueDetail {
+export class TopicDetail {
   status: string;
   isReadonly: boolean;
   sizeInBytes: number;
@@ -6,27 +6,21 @@ export class QueueDetail {
   createdAt: Date;
   accessedAt: Date;
   updatedAt: Date;
-  messageCount: number;
-  activeMessageCount: number;
   deadLetterMessageCount: number;
   scheduledMessageCount: number;
   transferMessageCount: number;
   transferDeadLetterMessageCount: number;
   enablePartitioning : boolean;
-  enableDeadLetteringOnMessageExpiration: boolean;
   requiresDuplicateDetection: boolean;
-  requiresSession: boolean;
   enableBatchedOperations: boolean;
   isAnonymousAccessible: boolean;
   supportOrdering: boolean;
   enableExpress: boolean;
-  maxDeliveryCount: number;
   userMetadata: string;
-  forwardTo: string;
-  forwardDeadLetteredMessagesTo: string;
   availabilityStatus: string;
-  lockDuration: string;
   defaultMessageTimeToLive: string;
   autoDeleteOnIdle: string;
   duplicateDetectionHistoryTimeWindow: string;
+  subscriptionCount: number;
+  enableFilteringMessagesBeforePublishing: boolean;
 }

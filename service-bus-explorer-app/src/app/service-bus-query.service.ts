@@ -4,6 +4,8 @@ import { APP_CONFIG, AppConfig } from './app.config';
 import { ApiClientService } from './api-client.service';
 import { IServiceBusUpdate } from './service-bus-update';
 import { QueueDetail } from './queue-detail';
+import { TopicDetail } from './topic-detail';
+import { SubscriptionDetail } from './subscription-detail';
 
 @Injectable()
 export class ServiceBusQueryService {
@@ -31,5 +33,19 @@ export class ServiceBusQueryService {
                .toPromise()
                .then(response =>
                  response.json() as QueueDetail);
+  }
+
+  getTopic(path: string): Promise<TopicDetail> {
+    return this.apiClientService.get(`${this.config.apiEndpoint}Topic/${path}`)
+               .toPromise()
+               .then(response =>
+                 response.json() as TopicDetail);
+  }
+
+  getSubscription(topicPath: string, name: string): Promise<SubscriptionDetail> {
+    return this.apiClientService.get(`${this.config.apiEndpoint}Subscription/${topicPath}/${name}`)
+               .toPromise()
+               .then(response =>
+                 response.json() as SubscriptionDetail);
   }
 }

@@ -4,12 +4,12 @@ using MediatR;
 
 namespace ServiceBusExplorer.Api.Controllers
 {
-    [RoutePrefix("api/Queue")]
-    public class QueueController : ApiController
+    [RoutePrefix("api/Topic")]
+    public class TopicController : ApiController
     {
         private readonly IMediator _mediator;
 
-        public QueueController(IMediator mediator)
+        public TopicController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -17,7 +17,7 @@ namespace ServiceBusExplorer.Api.Controllers
         [Route("{path}")]
         public async Task<IHttpActionResult> Get(string path)
         {
-            var dto = await _mediator.Send(new GetQueue { Path = path });
+            var dto = await _mediator.Send(new GetTopic { Path = path });
             return Ok(dto);
         }
     }
