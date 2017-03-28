@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.ExceptionHandling;
@@ -18,6 +19,8 @@ namespace ServiceBusExplorer.Api
 {
     public class Startup
     {
+        private IHubTicker _hubTicker;
+
         public void Configuration(IAppBuilder app)
         {
             var config = ConfigureWebApi();
@@ -30,6 +33,7 @@ namespace ServiceBusExplorer.Api
 
             app.UseAutofacMiddleware(container);
             app.UseAutofacWebApi(config);
+
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll); // This must be done prior to calling IAppBuilder.UseWebApi
             app.UseWebApi(config);
 
@@ -38,7 +42,12 @@ namespace ServiceBusExplorer.Api
 
             ConfigureStaticFiles(app);
 
-            HubTicker.Start(container);
+            _hubTicker = container.Resolve<IHubTicker>();
+        }
+
+        public void BeforeShutdown()
+        {
+            _hubTicker.StopAsync().Wait();
         }
 
         private static HttpConfiguration ConfigureWebApi()
@@ -63,11 +72,14 @@ namespace ServiceBusExplorer.Api
             builder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
 
             // register signalR hubs
-            //builder.RegisterType<ServiceBusExplorerHub>().ExternallyOwned();
+            builder.RegisterType<ServiceBusExplorerHub>().ExternallyOwned();
+            // register the hub context
             builder.Register(
                 ctx =>
                     hubConfig.Resolver.Resolve<IConnectionManager>()
                         .GetHubContext<ServiceBusExplorerHub, IServiceBusExplorerHub>()).ExternallyOwned();
+
+            builder.RegisterType<HubTicker>().As<IHubTicker>().SingleInstance();
 
             var settings = new JsonSerializerSettings {ContractResolver = new SignalRContractResolver()};
             var serializer = JsonSerializer.Create(settings);

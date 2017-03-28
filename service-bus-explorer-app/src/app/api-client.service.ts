@@ -10,4 +10,8 @@ export class ApiClientService {
   get(url: string, options?: RequestOptionsArgs):  Observable<Response> {
     return this.http.get(url, options);
   }
+
+  post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+    return this.http.post(url, body, options);
+  }
 }

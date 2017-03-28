@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autofac;
 using MediatR;
 using Microsoft.AspNet.SignalR;
 using Serilog;
@@ -9,75 +8,100 @@ using ServiceBusExplorer.Api.Controllers;
 
 namespace ServiceBusExplorer.Api.Infrastructure
 {
-    public class HubTicker
+    public interface IHubTicker
     {
-        private static HubTicker _instance;
+        Task StartAsync();
+        Task StopAsync();
+    }
+
+    public class HubTicker : IHubTicker, IDisposable
+    {
+        private readonly IHubContext<IServiceBusExplorerHub> _hubContext;
+        private readonly IMediator _mediator;
+        private readonly ILogger _logger;
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+        private readonly AutoResetEvent _stopSignal = new AutoResetEvent(false);
+        private Task _running;
         private const int Interval = 5000;  // TODO: put in app config
 
-        private readonly IContainer _container;
-        private readonly ManualResetEvent _stopSignal = new ManualResetEvent(false);
-        private Task _running;
-
-        private HubTicker(IContainer container)
+        public HubTicker(IHubContext<IServiceBusExplorerHub> hubContext, IMediator mediator, ILogger logger)
         {
-            _container = container;
+            _hubContext = hubContext;
+            _mediator = mediator;
+            _logger = logger;
         }
 
-        public static void Start(IContainer container)
+        public async Task StartAsync()
         {
-            if (_instance != null)
+            await _semaphore.WaitAsync();
+
+            try
             {
-                throw new InvalidOperationException($"{nameof(HubTicker)} was already started");
+                if (_running != null)
+                {
+                    return;
+                }
+
+                _running = Task.Run(() =>
+                {
+                    Run();
+                });
+
+            }
+            finally
+            {
+                _semaphore.Release();
             }
 
-            _instance = new HubTicker(container);
-            _instance.StartHubTicker();
         }
 
-        public static void Stop()
+        public async Task StopAsync()
         {
-            _instance.StopHubTicker();
-        }
+            await _semaphore.WaitAsync();
 
-        private void StopHubTicker()
-        {
-            _stopSignal.Set();
-            _running.Wait();
-        }
-
-        private void StartHubTicker()
-        {
-            _running = Task.Run(() =>
+            try
             {
-                Run();
-            });
+                if (_running == null)
+                {
+                    return;
+                }
+
+                _stopSignal.Set();
+                await _running;
+                _running = null;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+
         }
 
         private void Run()
         {
-            using (var scope = _container.BeginLifetimeScope())
+            _logger.Information($"{nameof(HubTicker)} started");
+
+            while (!_stopSignal.WaitOne(Interval))
             {
-                var hub = scope.Resolve<IHubContext<IServiceBusExplorerHub>>();
-                var logger = scope.Resolve<ILogger>();
-                var mediator = scope.Resolve<IMediator>();
-
-                logger.Information($"{nameof(HubTicker)} started");
-
-                while (!_stopSignal.WaitOne(Interval))
+                try
                 {
-                    try
-                    {
-                        var update = mediator.Send(new GetServiceBus()).Result;
-                        hub.Clients.All.ServiceBusUpdate(update);
-                    }
-                    catch (Exception e)
-                    {
-                        logger.Error("Exception during servicebus update: {message}", e.Message);
-                    }
+                    var update = _mediator.Send(new GetServiceBus()).Result;
+                    _hubContext.Clients.All.ServiceBusUpdate(update);
                 }
-
-                logger.Information($"{nameof(HubTicker)} stopped");
+                catch (Exception e)
+                {
+                    _logger.Error("Exception during servicebus update: {message}", e.Message);
+                }
             }
+
+            _logger.Information($"{nameof(HubTicker)} stopped");
+        }
+
+        public void Dispose()
+        {
+            _semaphore?.Dispose();
+            _stopSignal?.Dispose();
+            _running?.Dispose();
         }
     }
 }

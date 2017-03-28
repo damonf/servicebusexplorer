@@ -14,11 +14,16 @@ namespace ServiceBusExplorer.Api
             Logging.Initialize(new AppName(typeof(Startup).Assembly));
             
             Console.WriteLine("Starting web Server...");
-            WebApp.Start<Startup>(baseUri);
-            Console.WriteLine($"Server running at {baseUri} - press Enter to quit. ");
-            Console.ReadLine();
 
-            HubTicker.Stop();
+            var startup = new Startup();
+
+            using (WebApp.Start(baseUri, app => startup.Configuration(app)))
+            {
+                Console.WriteLine($"Server running at {baseUri} - press Enter to quit. ");
+                Console.ReadLine();
+                startup.BeforeShutdown();
+            }
+
             Logging.CloseAndFlush(new AppName(typeof(Startup).Assembly));
         }
     }

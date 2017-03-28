@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Microsoft.AspNet.SignalR;
 using Serilog;
 using ServiceBusExplorer.Api.Model;
@@ -25,12 +26,10 @@ namespace ServiceBusExplorer.Api.Infrastructure
 
         protected override void Dispose(bool disposing)
         {
-            _logger.Information($"{nameof(ServiceBusExplorerHub)} disposing");
-
-            // Dipose the hub lifetime scope when the hub is disposed.
-            if (disposing && _hubLifetimeScope != null)
+            // Dispose the hub lifetime scope when the hub is disposed.
+            if (disposing)
             {
-                _hubLifetimeScope.Dispose();
+                _hubLifetimeScope?.Dispose();
             }
 
             base.Dispose(disposing);

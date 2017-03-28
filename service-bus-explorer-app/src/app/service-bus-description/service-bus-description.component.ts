@@ -2,6 +2,7 @@ import { NgZone, Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 
 import { ServiceBusQueryService } from '../service-bus-query.service';
+import { ServiceBusCommandService } from '../service-bus-command.service';
 import { IServiceBusUpdate } from '../service-bus-update';
 import { ServiceBusDescription } from '../service-bus-description';
 import { TopicDescription } from '../topic-description';
@@ -14,11 +15,14 @@ import { SignalrHubService } from '../signalr-hub.service';
 })
 export class ServiceBusDescriptionComponent implements OnInit {
 
+  autoRefreshing: Boolean = false;
+  isRequesting: Boolean = false;
   serviceBusDescription: ServiceBusDescription = new ServiceBusDescription();
 
   constructor(
     private ngZone: NgZone,
     private serviceBusQueryService: ServiceBusQueryService,
+    private serviceBusCommandService: ServiceBusCommandService,
     private signalrHubService: SignalrHubService) {
   }
 
@@ -43,6 +47,45 @@ export class ServiceBusDescriptionComponent implements OnInit {
         console.log(err);
       }
     )
+  }
+
+  toggleAutoRefresh() {
+    this.isRequesting = true;
+    if (this.autoRefreshing) {
+      this.serviceBusCommandService.disableAutoRefresh()
+        .then(() => {
+          this.isRequesting = false;
+          this.autoRefreshing = false;
+        })
+        .catch((reason: any) => {
+          this.isRequesting = false;
+          this.handleError(reason);
+        });
+    }
+    else {
+      this.serviceBusCommandService.enableAutoRefresh()
+        .then(() => {
+          this.isRequesting = false;
+          this.autoRefreshing = true;
+        })
+        .catch((reason: any) => {
+          this.isRequesting = false;
+          this.handleError(reason);
+        });
+    }
+  }
+
+  refresh() {
+    this.isRequesting = true;
+    this.serviceBusQueryService.getUpdate()
+      .then(update => {
+        this.isRequesting = false;
+        this.serviceBusDescription.update(update);
+      })
+      .catch((reason: any) => {
+        this.isRequesting = false;
+        this.handleError(reason);
+      });
   }
 
   private handleError(error: any): void {

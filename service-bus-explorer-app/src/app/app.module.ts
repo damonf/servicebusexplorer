@@ -9,6 +9,7 @@ import { APP_CONFIG, APP_CONFIG_OBJECT } from './app.config';
 import { AppComponent } from './app.component';
 import { ApiClientService } from './api-client.service';
 import { ServiceBusQueryService } from './service-bus-query.service';
+import { ServiceBusCommandService } from './service-bus-command.service';
 import { ServiceBusDescriptionComponent } from './service-bus-description/service-bus-description.component';
 import { QueueListComponent } from './queue-list/queue-list.component';
 import { TopicListComponent } from './topic-list/topic-list.component';
@@ -53,6 +54,7 @@ import { ServicebusTitleComponent } from './servicebus-title/servicebus-title.co
   providers: [
     { provide: APP_CONFIG, useValue: APP_CONFIG_OBJECT },
     ServiceBusQueryService,
+    ServiceBusCommandService,
     ApiClientService,
     WindowRefService,
     SignalrHubService
