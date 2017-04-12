@@ -2,7 +2,7 @@
 using Autofac;
 using Microsoft.AspNet.SignalR;
 using Serilog;
-using ServiceBusExplorer.Api.Model;
+using ServiceBusExplorer.Api.Models;
 
 namespace ServiceBusExplorer.Api.Infrastructure
 {

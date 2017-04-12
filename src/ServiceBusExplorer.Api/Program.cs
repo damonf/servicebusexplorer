@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using Microsoft.Owin.Hosting;
-using ServiceBusExplorer.Api.Infrastructure;
+using ServiceBusExplorer.Api.Logging;
 
 namespace ServiceBusExplorer.Api
 {
@@ -11,8 +11,8 @@ namespace ServiceBusExplorer.Api
         {
             var baseUri = ConfigurationManager.AppSettings.Get("baseUri");
 
-            Logging.Initialize(new AppName(typeof(Startup).Assembly));
-            
+            Logger.Initialize(typeof(Startup).Assembly);
+
             Console.WriteLine("Starting web Server...");
 
             var startup = new Startup();
@@ -24,7 +24,7 @@ namespace ServiceBusExplorer.Api
                 startup.BeforeShutdown();
             }
 
-            Logging.CloseAndFlush(new AppName(typeof(Startup).Assembly));
+            Logger.CloseAndFlush(typeof(Startup).Assembly);
         }
     }
 }

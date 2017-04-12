@@ -13,7 +13,9 @@ using Microsoft.Owin.StaticFiles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using ServiceBusExplorer.Api.Features.Hub;
 using ServiceBusExplorer.Api.Infrastructure;
+using ServiceBusExplorer.Api.Logging;
 
 namespace ServiceBusExplorer.Api
 {
