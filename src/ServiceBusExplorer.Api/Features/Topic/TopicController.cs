@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using MediatR;
+using ServiceBusExplorer.Api.Models;
 
 namespace ServiceBusExplorer.Api.Features.Topic
 {
@@ -15,6 +17,7 @@ namespace ServiceBusExplorer.Api.Features.Topic
         }
 
         [Route("{path}")]
+        [ResponseType(typeof(TopicDetailModel))]
         public async Task<IHttpActionResult> Get(string path)
         {
             var dto = await _mediator.Send(new GetTopic { Path = path });

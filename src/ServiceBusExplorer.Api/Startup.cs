@@ -56,15 +56,12 @@ namespace ServiceBusExplorer.Api
         {
             var config = new HttpConfiguration();
 
+            SwaggerConfig.Register(config);
+
             config.EnableCors(new EnableCorsAttribute("*", "*", "GET, POST, OPTIONS, PUT, DELETE"));
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
             config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                "DefaultApi",
-                "api/{controller}/{id}",
-                new { id = RouteParameter.Optional });
 
             return config;
         }

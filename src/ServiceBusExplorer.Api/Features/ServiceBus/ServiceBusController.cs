@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using MediatR;
+using ServiceBusExplorer.Api.Models;
 
 namespace ServiceBusExplorer.Api.Features.ServiceBus
 {
@@ -15,6 +17,7 @@ namespace ServiceBusExplorer.Api.Features.ServiceBus
         }
 
         [Route]
+        [ResponseType(typeof(ServiceBusModel))]
         public async Task<IHttpActionResult> Get()
         {
             var serviceBusDescription = await _mediator.Send(new GetServiceBus());
@@ -22,6 +25,7 @@ namespace ServiceBusExplorer.Api.Features.ServiceBus
         }
 
         [Route("Name")]
+        [ResponseType(typeof(string))]
         public async Task<IHttpActionResult> GetAddress()
         {
             var address = await _mediator.Send(new GetServiceBusAddress());
