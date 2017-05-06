@@ -1,10 +1,10 @@
-import { ServiceBusExplorerAppPage } from './app.po';
+import { ServiceBusExplorerPage } from './app.po';
 
-describe('service-bus-explorer-app App', function() {
-  let page: ServiceBusExplorerAppPage;
+describe('service-bus-explorer App', () => {
+  let page: ServiceBusExplorerPage;
 
   beforeEach(() => {
-    page = new ServiceBusExplorerAppPage();
+    page = new ServiceBusExplorerPage();
   });
 
   it('should display message saying app works', () => {

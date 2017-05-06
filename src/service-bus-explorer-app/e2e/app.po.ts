@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class ServiceBusExplorerAppPage {
+export class ServiceBusExplorerPage {
   navigateTo() {
     return browser.get('/');
   }
