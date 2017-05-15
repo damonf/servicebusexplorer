@@ -9,5 +9,6 @@ namespace ServiceBusExplorer.Api.Infrastructure
             GetSetting("Microsoft.ServiceBus.ConnectionString");
 
         public int AutoRefreshIntervalMs => GetSetting<int>(MethodBase.GetCurrentMethod().Name);
+        public string AppPath => GetSetting(MethodBase.GetCurrentMethod().Name);
     }
 }

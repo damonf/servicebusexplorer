@@ -5,5 +5,6 @@ namespace ServiceBusExplorer.Api.Infrastructure
     {
         string ServiceBusConnectionString { get; }
         int AutoRefreshIntervalMs { get; }
+        string AppPath { get; }
     }
 }

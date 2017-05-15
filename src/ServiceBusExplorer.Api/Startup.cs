@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -42,7 +43,7 @@ namespace ServiceBusExplorer.Api
             hubConfig.Resolver = new AutofacDependencyResolver(container);
             app.MapSignalR("/signalr", hubConfig);
 
-            ConfigureStaticFiles(app);
+            ConfigureStaticFiles(app, container.Resolve<IAppSettings>());
 
             _hubTicker = container.Resolve<IHubTicker>();
         }
@@ -89,18 +90,28 @@ namespace ServiceBusExplorer.Api
         }
 
         // This allows us to also serve up the SPA
-        private static void ConfigureStaticFiles(IAppBuilder app)
+        private static void ConfigureStaticFiles(IAppBuilder app, IAppSettings appSettings)
         {
-            const string rootFolder = "./app"; // TODO: put in app.config and point to wherever the files will come from
-            var fileSystem = new PhysicalFileSystem(rootFolder);
-            var options = new FileServerOptions
-            {
-                //EnableDirectoryBrowsing = true,
-                EnableDefaultFiles = true,
-                FileSystem = fileSystem
-            };
+            var appFolder = appSettings.AppPath;
 
-            app.UseFileServer(options);
+            try
+            {
+                var fileSystem = new PhysicalFileSystem(appFolder);
+                var options = new FileServerOptions
+                {
+                    //EnableDirectoryBrowsing = true,
+                    EnableDefaultFiles = true,
+                    FileSystem = fileSystem
+                };
+
+                app.UseFileServer(options);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Console.WriteLine(
+                    $"Error! \"AppPath\" specified in App.config does not exist: value is \"{appFolder}\"." +
+                     "  GUI will not be served by this host.");
+            }
         }
     }
 }
