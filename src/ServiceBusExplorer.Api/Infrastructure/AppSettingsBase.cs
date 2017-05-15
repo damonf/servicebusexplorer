@@ -18,5 +18,6 @@ namespace ServiceBusExplorer.Api.Infrastructure
 
             return (T)Convert.ChangeType(setting, typeof(T));
         }
+
     }
 }

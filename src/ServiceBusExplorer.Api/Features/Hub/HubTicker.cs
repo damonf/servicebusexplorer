@@ -16,14 +16,19 @@ namespace ServiceBusExplorer.Api.Features.Hub
         private readonly ILogger _logger;
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         private readonly AutoResetEvent _stopSignal = new AutoResetEvent(false);
+        private readonly int _interval;
         private Task _running;
-        private const int Interval = 5000;  // TODO: put in app config
 
-        public HubTicker(IHubContext<IServiceBusExplorerHub> hubContext, IMediator mediator, ILogger logger)
+        public HubTicker(
+            IHubContext<IServiceBusExplorerHub> hubContext,
+            IMediator mediator,
+            IAppSettings appSettings,
+            ILogger logger)
         {
             _hubContext = hubContext;
             _mediator = mediator;
             _logger = logger;
+            _interval = appSettings.AutoRefreshIntervalMs;
         }
 
         public async Task StartAsync()
@@ -47,7 +52,6 @@ namespace ServiceBusExplorer.Api.Features.Hub
             {
                 _semaphore.Release();
             }
-
         }
 
         public async Task StopAsync()
@@ -76,7 +80,7 @@ namespace ServiceBusExplorer.Api.Features.Hub
         {
             _logger.Information($"{nameof(HubTicker)} started");
 
-            while (!_stopSignal.WaitOne(Interval))
+            while (!_stopSignal.WaitOne(_interval))
             {
                 try
                 {
